@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Sender</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f4f7f6;
+            margin: 0;
+            padding-left: 20px;
+            padding-right: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Align content to the top */
+            align-items: center;
+            min-height: 100vh; /* Ensures body takes full height but allows the footer to stay at the bottom */
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .form-container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+            box-sizing: border-box;
+        }
+
+        label {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="file"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            background-color: #f7f7f7;
+            transition: border-color 0.3s ease-in-out;
+            box-sizing: border-box;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        input[type="file"]:focus,
+        textarea:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #3498db;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        button i {
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .file-input-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .file-input-container input[type="file"] {
+            display: none;
+        }
+
+        .file-input-container label {
+            background-color: #3498db;
+            color: #fff;
+            padding: 12px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .file-input-container label:hover {
+            background-color: #2980b9;
+        }
+
+        .schedule-time {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .time-input-container {
+            display: none;
+            margin-top: 16px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: auto; /* This pushes the footer to the bottom */
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .footer a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem; /* Adjust the heading size */
+            }
+
+            .form-container {
+                padding: 20px;
+                margin: 10px; /* Ensure there's some space on small screens */
+            }
+
+            button {
+                font-size: 1rem; /* Smaller button size */
+            }
+
+            .file-input-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .file-input-container label {
+                margin-top: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5rem; /* Further reduce heading size */
+            }
+
+            .form-container {
+                padding: 15px;
+            }
+
+            label {
+                font-size: 0.9rem; /* Smaller label font size */
+            }
+
+            input[type="text"],
+            input[type="email"],
+            input[type="password"],
+            input[type="file"],
+            textarea,
+            button {
+                font-size: 0.9rem; /* Smaller font for inputs and button */
+            }
+
+            .footer {
+                font-size: 0.8rem; /* Smaller footer text */
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Send Email</h1>
+    <div class="form-container">
+        <form action="/send" method="POST" enctype="multipart/form-data">
+            <!-- Sender Email -->
+            <label for="sender_email">Sender Email:</label>
+            <input type="email" id="sender_email" name="sender_email" required>
+
+            <!-- Sender Password -->
+            <label for="sender_password">Sender Password:</label>
+            <input type="password" id="sender_password" name="sender_password" required>
+
+            <!-- Recipients -->
+            <label for="recipients">Recipients (comma separated):</label>
+            <input type="text" id="recipients" name="recipients" required>
+
+            <!-- Subject -->
+            <label for="subject">Subject:</label>
+            <input type="text" id="subject" name="subject" required>
+
+            <!-- Body -->
+            <label for="body">Body:</label>
+            <textarea id="body" name="body" rows="4" required></textarea>
+
+            <!-- Attachments -->
+            <label for="attachments">Attachments:</label>
+            <div class="file-input-container">
+                <input type="file" id="attachments" name="attachments" multiple>
+                <label for="attachments">
+                    <i class="fas fa-paperclip"></i> Attach Files
+                </label>
+            </div>
+
+            <!-- Scheduling -->
+            <label for="schedule">Do you want to schedule the email? (yes/no):</label>
+            <input type="text" id="schedule" name="schedule" required>
+
+            <div class="time-input-container" id="time_input">
+                <label for="time">Enter Time (HH:MM, 24-hour format):</label>
+                <input type="time" id="time" name="time">
+            </div>
+
+            <button type="submit">
+                <i class="fas fa-paper-plane"></i> Send Email
+            </button>
+        </form>
+    </div>
+
+    <div class="footer">
+        <p>Made with ❤️ by <a href="https://github.com/AaronKurian" target="_blank">Aaron Kurian Abraham</a></p>
+    </div>
+
+    <script>
+        // Schedule input visibility logic
+        const scheduleInput = document.getElementById('schedule');
+        const timeInputDiv = document.getElementById('time_input');
+
+        scheduleInput.addEventListener('input', function() {
+            if (scheduleInput.value.toLowerCase() === 'yes') {
+                timeInputDiv.style.display = 'block';
+            } else {
+                timeInputDiv.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
