@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 import smtplib
 import os
 # import schedule
@@ -14,6 +14,11 @@ app = Flask(__name__)
 # Directory to store uploaded files temporarily
 UPLOAD_FOLDER = 'uploads/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico')
+
 
 # Function to send the email
 def send_email(sender_email, sender_password, recipients, subject, body, attachments=[]):
