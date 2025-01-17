@@ -1,7 +1,8 @@
-# Automailer
+# Auto Mailer
 
 Automailer is a Flask-based web application that allows users to send emails with or without attachments. The application supports file uploads and integrates with SMTP servers for email sending.
-
+You can access the **live version** at:  
+   **🔗 [https://automailer-k0qe.onrender.com/](https://automailer-k0qe.onrender.com/)** 
 ## Features
 - Send emails with plain text body and attachments.
 - Upload multiple files as attachments.
