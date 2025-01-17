@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 import smtplib
 import os
-import schedule
+# import schedule
 import time
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -44,13 +44,13 @@ def send_email(sender_email, sender_password, recipients, subject, body, attachm
     except Exception as e:
         print(f"Error sending email: {e}")
 
-# Function to schedule email
-def schedule_email(time_str, sender_email, sender_password, recipients, subject, body, attachments=[]):
-    schedule.every().day.at(time_str).do(send_email, sender_email, sender_password, recipients, subject, body, attachments)
-    print(f"Email scheduled at {time_str}")
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
+# # Function to schedule email
+# def schedule_email(time_str, sender_email, sender_password, recipients, subject, body, attachments=[]):
+#     schedule.every().day.at(time_str).do(send_email, sender_email, sender_password, recipients, subject, body, attachments)
+#     print(f"Email scheduled at {time_str}")
+#     while True:
+#         schedule.run_pending()
+#         time.sleep(1)
 
 # Route to the home page
 @app.route('/')
